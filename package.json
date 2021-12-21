@@ -6,13 +6,15 @@
     "test": "jasmine",
     "dev": "tsc -w",
     "lint": "eslint --prettierrc --ext .ts ",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "start": "node src/server.ts"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "^4.17.2",
+    "file-exists": "^5.0.1",
     "sharp": "^0.29.3"
   },
   "devDependencies": {
