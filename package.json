@@ -7,7 +7,7 @@
     "dev": "tsc -w",
     "lint": "eslint --prettierrc --ext .ts ",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "start": "node src/server.ts"
+    "start": "nodemon src/server.ts"
   },
   "author": "",
   "license": "ISC",
