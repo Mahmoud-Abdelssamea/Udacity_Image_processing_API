@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/sharp": "^0.29.4",
     "express": "^4.17.2",
     "file-exists": "^5.0.1",
     "sharp": "^0.29.3"
