@@ -47,4 +47,4 @@ const resizing = async (imageName: string, height: number, width?: number) => {
   await convert.toFile(imagePath("updatedImages", imageName, height, width));
 };
 
-export { resizing, imagePath };
+export { resizing, imagePath, removeImageExtention, addImageExtention };
