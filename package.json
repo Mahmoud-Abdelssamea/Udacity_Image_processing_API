@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine",
+    "test": "npm tsc && npm jasmine",
     "dev": "tsc -w",
     "lint": "eslint --prettierrc --ext .ts ",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
