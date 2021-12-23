@@ -40,7 +40,9 @@ router.get("/convert/", async (req, res, next) => {
     } else {
       // throw new Error("image name not available in folder /images");
       console.error("image name not available in folder /images");
-
+      res.send(
+        "image name not available in folder /images   ##Note if you added extention of image Please remove it"
+      );
       // throw new Error("image name not available in folder /images");
     }
   } else {

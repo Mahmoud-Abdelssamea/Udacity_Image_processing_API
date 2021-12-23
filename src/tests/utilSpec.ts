@@ -1,29 +1,26 @@
-import { removeImageExtention, addImageExtention, resizing } from "../util";
+import { validateInputs, imageAvailble } from "../util";
 
-describe("should remove the extention .jpg", () => {
-  it("should remove the extention .jpg if available", () => {
-    expect(removeImageExtention("image.jpg")).toEqual("image");
+describe("test validatInputs function", () => {
+  it("should give me true as all required data available", () => {
+    const validate = validateInputs("image", 200, 300);
+    expect(validate).toBeTrue();
   });
 
-  it("should send the same image without remove any thing ", () => {
-    expect(removeImageExtention("image")).toEqual("image");
-  });
-
-  it("should not send any thing", () => {
-    expect(removeImageExtention("")).toEqual("");
+  it("should give me false as some required data not available", () => {
+    const validate = validateInputs("", 200, 300);
+    expect(validate).toBeFalse();
   });
 });
 
-describe("should add the extention .jpg if not available", () => {
-  it("should add the extention .jpg ", () => {
-    expect(addImageExtention("image")).toEqual("image.jpg");
+// ---------------------------------------------------------------------------
+describe("test imageAvailble function", () => {
+  it("should give me true if image is available in folder /images", () => {
+    const availble = imageAvailble("santamonica");
+    expect(availble).toBeTrue();
   });
 
-  it("should send file name with its extention without adding again", () => {
-    expect(addImageExtention("image.jpg")).toEqual("image.jpg");
-  });
-
-  it("should add the extention .jpg if not available", () => {
-    expect(addImageExtention("")).toEqual(undefined);
+  it("should give me false as some required data not available", () => {
+    const availble = imageAvailble("imagesss");
+    expect(availble).toBeFalse();
   });
 });
