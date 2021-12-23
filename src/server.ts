@@ -2,6 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import convertRouter from "./routes/images";
 import morgan from "morgan";
+import { error } from "console";
 dotenv.config();
 const app = express();
 

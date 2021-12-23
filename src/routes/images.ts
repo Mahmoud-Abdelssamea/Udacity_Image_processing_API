@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { imagePath, resizing } from "../util";
+import { validateInputs, imageAvailble, resizeImage } from "../util";
 import fs from "fs";
 // import resizing from "../util";
 
@@ -11,31 +11,24 @@ router.get("/convert/", async (req, res, next) => {
   const width = +(req.query as { width: string }).width;
   const height = +(req.query as { height: string }).height;
 
-  //check if image is already converted with same size before (caching)
-  const convertedImagepath = imagePath(
-    "updatedImages",
-    imageName,
-    height,
-    width
-  );
+  if (validateInputs(imageName, width, height)) {
+    // if image already resized before so it will show it again and will not resize it.
+    if (fs.existsSync(`updatedImages/${imageName}_${width}_${height}.jpg`)) {
+      res.send("image is already available");
 
-  // if required image is already available and converted before
-  // send it to browser
-  if (fs.existsSync(convertedImagepath)) {
-    res.setHeader("content-type", "image/jpeg");
-    fs.readFile(convertedImagepath, (err, image) => {
-      res.end(image);
-    });
+      // if this image is new and not resized before so it will be resized as required
+    } else if (imageAvailble(imageName)) {
+      resizeImage(imageName, width, height);
+      console.log("image resized");
+
+      // if image you want to resize not availabe in folder images/ so it will send message
+    } else {
+      console.log("image name not available in folder /images");
+
+      // throw new Error("image name not available in folder /images");
+    }
   } else {
-    // if not converted before so we start convert it
-    await resizing(imageName, height, width);
-
-    //After send image to browser
-    res.setHeader("content-type", "image/jpeg");
-    const path = imagePath("updatedImages", imageName, height, width);
-    fs.readFile(path, (err, image) => {
-      res.end(image);
-    });
+    console.log("you forgot to add some data");
   }
 });
 

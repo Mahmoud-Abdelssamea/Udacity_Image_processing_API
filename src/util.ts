@@ -1,50 +1,49 @@
+import fs from "fs";
 import sharp from "sharp";
 
-// check the extention for image is availble or not
-// if not will add extention .jpg
-const addImageExtention = (nameOfImage: string) => {
-  if (nameOfImage.slice(-4) === ".jpg") {
-    return nameOfImage;
+// to check if user added all required data
+const validateInputs = (imageName: string, width: number, height: number) => {
+  if (imageName && width && height) {
+    return true;
   } else {
-    return `${nameOfImage}.jpg`;
+    return false;
   }
 };
 
-// remove extention from image
-const removeImageExtention = (nameOfImage: string) => {
-  if (nameOfImage.slice(-4) === ".jpg") {
-    return nameOfImage.slice(0, -4);
+// check image availalbe in /images folder
+const imageAvailble = (imageName: string) => {
+  // if user added image name with extention .jpg
+  if (imageName.slice(-4) === ".jpg") {
+    if (fs.existsSync(`images/${imageName}`)) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
-    return nameOfImage;
+    // if user added image name without extention .jpg
+    if (fs.existsSync(`images/${imageName}.jpg`)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };
 
-// function to get the path for the image
-const imagePath = (
-  folder: string,
-  imageName: string,
-  height?: number,
-  width?: number
-) => {
-  if (width && height) {
-    return `${folder}/${removeImageExtention(
-      imageName
-    )}_${height}_${width}.jpg`;
-  } else {
-    return `${folder}/${addImageExtention(imageName)}`;
-  }
+// sharp function to resize the image
+const resizeImage = (imageName: string, width: number, height: number) => {
+  const path = `images/${imageName}`;
+
+  sharp(path)
+    .resize(width, height, {
+      kernel: sharp.kernel.nearest,
+      fit: "contain",
+      background: { r: 255, g: 255, b: 255, alpha: 0.5 },
+    })
+    .toFile(`updatedImages/${imageName}_${width}_${height}.jpg`)
+    .then(() => {
+      // output.png is a 200 pixels wide and 300 pixels high image
+      // containing a nearest-neighbour scaled version
+      // contained within the north-east corner of a semi-transparent white canvas
+    });
 };
-
-// make resizing funcion to resize the image
-const resizing = async (imageName: string, height: number, width?: number) => {
-  // check if user added extention to image name
-
-  //   use sharp middleware to resize the image
-
-  const convert = sharp(imagePath("images", imageName));
-
-  convert.resize(height, width, { fit: "contain" });
-  await convert.toFile(imagePath("updatedImages", imageName, height, width));
-};
-
-export { resizing, imagePath, removeImageExtention, addImageExtention };
+export { validateInputs, imageAvailble, resizeImage };

@@ -11,8 +11,12 @@ const addImageExtention = (nameOfImage) => {
     if (nameOfImage.slice(-4) === ".jpg") {
         return nameOfImage;
     }
-    else {
+    else if (nameOfImage.length > 0) {
         return `${nameOfImage}.jpg`;
+    }
+    else {
+        return undefined;
+        // res.send("please add a ")
     }
 };
 exports.addImageExtention = addImageExtention;
