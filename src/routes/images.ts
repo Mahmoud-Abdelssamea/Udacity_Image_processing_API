@@ -12,23 +12,40 @@ router.get("/convert/", async (req, res, next) => {
   const height = +(req.query as { height: string }).height;
 
   if (validateInputs(imageName, width, height)) {
+    const imagePath = `updatedImages/${imageName}_${width}_${height}.jpg`;
+
     // if image already resized before so it will show it again and will not resize it.
-    if (fs.existsSync(`updatedImages/${imageName}_${width}_${height}.jpg`)) {
-      res.send("image is already available");
+    if (fs.existsSync(imagePath)) {
+      res.setHeader("content-type", "image/jpeg");
+      // read file to the browser
+      fs.readFile(imagePath, (err, updatedImage) => {
+        res.end(updatedImage);
+      });
 
       // if this image is new and not resized before so it will be resized as required
     } else if (imageAvailble(imageName)) {
-      resizeImage(imageName, width, height);
-      console.log("image resized");
+      await resizeImage(imageName, width, height);
+
+      // send image to Browser by changing content-type
+      res.setHeader("content-type", "image/jpeg");
+      // read file to the browser
+      fs.readFile(
+        `updatedImages/${imageName}_${width}_${height}.jpg`,
+        (err, updatedImage) => {
+          res.end(updatedImage);
+        }
+      );
 
       // if image you want to resize not availabe in folder images/ so it will send message
     } else {
-      console.log("image name not available in folder /images");
+      // throw new Error("image name not available in folder /images");
+      console.error("image name not available in folder /images");
 
       // throw new Error("image name not available in folder /images");
     }
   } else {
     console.log("you forgot to add some data");
+    res.send("you forgot to add some data");
   }
 });
 
