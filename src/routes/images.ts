@@ -44,9 +44,15 @@ router.get("/convert/", async (req, res) => {
       );
       // throw new Error("image name not available in folder /images");
     }
+  } else if (!imageName && width && height) {
+    console.log("filename value is missing");
+    res.send("filename value is missing");
+  } else if (imageName && !width && height) {
+    console.log("Width Value is missing");
+    res.send("width value is missing");
   } else {
-    console.log("you forgot to add some data");
-    res.send("you forgot to add some data");
+    console.log("height Value is missing");
+    res.send("height Value is missing");
   }
 });
 
