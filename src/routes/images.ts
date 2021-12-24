@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { resizingHandler } from "../util";
-import fs from "fs";
 
 const router = Router();
 
