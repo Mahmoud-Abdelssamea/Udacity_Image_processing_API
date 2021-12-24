@@ -1,6 +1,16 @@
 import fs from "fs";
 import sharp from "sharp";
 
+const createUpdatedImageDIR = (): void => {
+  if (!fs.existsSync(`updatedImages`)) {
+    fs.mkdir("updatedImages/", err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+  }
+};
+
 // to check if user added all required data
 const validateInputs = (
   imageName: string,
@@ -45,4 +55,4 @@ const resizeImage = async (
   }
 };
 
-export { validateInputs, imageAvailble, resizeImage };
+export { validateInputs, imageAvailble, resizeImage, createUpdatedImageDIR };

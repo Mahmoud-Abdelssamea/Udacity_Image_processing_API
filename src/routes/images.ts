@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { validateInputs, imageAvailble, resizeImage } from "../util";
+import {
+  validateInputs,
+  imageAvailble,
+  resizeImage,
+  createUpdatedImageDIR,
+} from "../util";
 import fs from "fs";
 
 const router = Router();
@@ -11,6 +16,7 @@ router.get("/convert/", async (req, res) => {
   const height = +(req.query.height as string) as number;
 
   if (validateInputs(imageName, width, height)) {
+    createUpdatedImageDIR();
     const imagePath = `updatedImages/${imageName}_${width}_${height}.jpg`;
 
     // if image already resized before so it will show it again and will not resize it.
