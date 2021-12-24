@@ -1,11 +1,10 @@
 import { Router } from "express";
 import { validateInputs, imageAvailble, resizeImage } from "../util";
 import fs from "fs";
-// import resizing from "../util";
 
 const router = Router();
 
-router.get("/convert/", async (req, res, next) => {
+router.get("/convert/", async (req, res) => {
   // get the required image name, width and height
   const imageName = (req.query as { filename: string }).filename;
   const width = +(req.query as { width: string }).width;

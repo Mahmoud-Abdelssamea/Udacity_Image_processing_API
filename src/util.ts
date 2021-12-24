@@ -2,7 +2,11 @@ import fs from "fs";
 import sharp from "sharp";
 
 // to check if user added all required data
-const validateInputs = (imageName: string, width: number, height: number) => {
+const validateInputs = (
+  imageName: string,
+  width: number,
+  height: number
+): boolean => {
   if (imageName && width !== 0 && width && height && height !== 0) {
     return true;
   } else {
@@ -11,7 +15,7 @@ const validateInputs = (imageName: string, width: number, height: number) => {
 };
 
 // check image availalbe in /images folder
-const imageAvailble = (imageName: string) => {
+const imageAvailble = (imageName: string): boolean => {
   // if user added image name without extention .jpg
   if (fs.existsSync(`images/${imageName}.jpg`)) {
     return true;
@@ -25,7 +29,7 @@ const resizeImage = async (
   imageName: string,
   width: number,
   height: number
-) => {
+): Promise<void> => {
   const path = `images/${imageName}.jpg`;
 
   try {
