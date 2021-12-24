@@ -1,7 +1,7 @@
 import fs from "fs";
 import sharp from "sharp";
 
-const createUpdatedImageDIR = async () => {
+const createUpdatedImageDIR = async (): Promise<voild> => {
   if (!fs.existsSync(`updatedImages`)) {
     fs.mkdir("updatedImages/", err => {
       if (err) {
