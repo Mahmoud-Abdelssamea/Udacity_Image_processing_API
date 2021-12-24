@@ -6,9 +6,9 @@ const router = Router();
 
 router.get("/convert/", async (req, res) => {
   // get the required image name, width and height
-  const imageName = (req.query as { filename: string }).filename;
-  const width = +(req.query as { width: string }).width;
-  const height = +(req.query as { height: string }).height;
+  const imageName = req.query.filename as string;
+  const width = +(req.query.width as string) as number;
+  const height = +(req.query.height as string) as number;
 
   if (validateInputs(imageName, width, height)) {
     const imagePath = `updatedImages/${imageName}_${width}_${height}.jpg`;
