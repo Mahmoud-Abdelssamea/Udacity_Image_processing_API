@@ -1,4 +1,11 @@
-import { validateInputs, imageAvailble, createUpdatedImageDIR } from "../util";
+import {
+  validateInputs,
+  imageAvailble,
+  createUpdatedImageDIR,
+  resizeImage,
+} from "../util";
+
+import fs from "fs";
 
 describe("test validatInputs function", () => {
   it("should give me true as all required data available", () => {
@@ -28,8 +35,21 @@ describe("test imageAvailble function", () => {
 // ---------------------------createUpdatedImageDIR--------------------------------------------
 
 describe("test createUpdatedImageDIR function", () => {
-  it("should output undefined", () => {
-    const availble = createUpdatedImageDIR();
-    expect(availble).toBeUndefined();
+  it("should output folder with name 'updatedImages/' ", () => {
+    createUpdatedImageDIR().then(() => {
+      const dir = `updatedImages/`;
+      expect(fs.existsSync(dir)).toBeTrue();
+    });
+  });
+});
+
+// --------------------------resizing function --------------------------------------------
+// shoud not be available image with same name in the updatedImages folder
+describe("test resizing function", () => {
+  it("should output true when new image resized in folder /udatedImages", async () => {
+    await resizeImage("santamonica", 200, 300).then(() => {
+      const thePath = `updatedImages/santamonica_200_300.jpg`;
+      expect(fs.existsSync(thePath)).toBeTrue();
+    });
   });
 });

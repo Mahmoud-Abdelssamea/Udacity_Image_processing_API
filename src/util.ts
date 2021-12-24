@@ -1,7 +1,7 @@
 import fs from "fs";
 import sharp from "sharp";
 
-const createUpdatedImageDIR = (): void => {
+const createUpdatedImageDIR = async () => {
   if (!fs.existsSync(`updatedImages`)) {
     fs.mkdir("updatedImages/", err => {
       if (err) {
@@ -45,7 +45,6 @@ const resizeImage = async (
   try {
     await sharp(path)
       .resize(width, height, {
-        // kernel: sharp.kernel.nearest,
         fit: "contain",
         background: { r: 255, g: 255, b: 255, alpha: 0.5 },
       })
