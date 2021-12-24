@@ -1,4 +1,4 @@
-import { validateInputs, imageAvailble } from "../util";
+import { validateInputs, imageAvailble, createUpdatedImageDIR } from "../util";
 
 describe("test validatInputs function", () => {
   it("should give me true as all required data available", () => {
@@ -22,5 +22,14 @@ describe("test imageAvailble function", () => {
   it("should give me false as some required data not available", () => {
     const availble = imageAvailble("imagesss");
     expect(availble).toBeFalse();
+  });
+});
+
+// ---------------------------createUpdatedImageDIR--------------------------------------------
+
+describe("test createUpdatedImageDIR function", () => {
+  it("should output undefined", () => {
+    const availble = createUpdatedImageDIR();
+    expect(availble).toBeUndefined();
   });
 });
